@@ -18,10 +18,15 @@ dependencies {
     testImplementation 'com.github.javafaker:javafaker:1.0.1'
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
     testImplementation 'com.codeborne:selenide:5.3.1'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.12'
     testCompile group: 'com.github.javafaker', name: 'javafaker', version: '0.12'
 }
 
 test {
     useJUnitPlatform()
     systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    systemProperty 'sut.url', System.getProperty('sut.url')
+    systemProperty 'db.url', System.getProperty('db.url')
+    systemProperty 'db.user', System.getProperty('db.user')
+    systemProperty 'db.password', System.getProperty('db.password')
 }

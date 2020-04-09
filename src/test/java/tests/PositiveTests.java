@@ -1,48 +1,53 @@
 package tests;
 
+import data.DBUtils;
+import data.DataHelper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.BuyTripPage;
 
 import java.sql.SQLException;
 
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PositiveTests {
+    BuyTripPage page = new BuyTripPage();
 
     @Test
-    void shouldApprovePayment() throws SQLException {
-        open("http://localhost:8080");
-        BuyTripPage.payWithValidCard();
-        $(withText("Успешно")).waitUntil(visible, 10000);
-        assertTrue(BuyTripPage.isPaymentApproved());
+    @DisplayName("Getting success message and approved status in DB after payment with valid card")
+    void shouldApprovePaymentWithValidCard() throws SQLException {
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithValidCard);
+        page.checkSuccessMessage();
+        assertEquals(DBUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
 
     @Test
-    void shouldDeclinePayment() throws SQLException {
-        open("http://localhost:8080");
-        BuyTripPage.payWithInvalidCard();
-        $(withText("Ошибка")).waitUntil(visible, 10000);
-        assertFalse(BuyTripPage.isPaymentApproved());
+    @DisplayName("Getting error message and declined status in DB after payment with invalid card")
+    void shouldDeclinePaymentWithInvalidCard() throws SQLException {
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithInvalidCard);
+        page.checkErrorMessage();
+        assertNotEquals(DBUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
 
     @Test
-    void shouldApproveCredit() throws SQLException {
-        open("http://localhost:8080");
-        BuyTripPage.takeCreditWithValidCard();
-        $(withText("Успешно")).waitUntil(visible, 10000);
-        assertTrue(BuyTripPage.isCreditApproved());
-        assertTrue(BuyTripPage.isCreditIDNotNull());
+    @DisplayName("Getting success message and approved status with right payment info in DB after taking credit with valid card")
+    void shouldApproveCreditWithValidCard() throws SQLException {
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithValidCard);
+        page.checkSuccessMessage();
+        assertEquals(DBUtils.getCreditStatus(), DataHelper.APPROVED_STATUS);
+        assertNotEquals(DBUtils.getOrderInformation(), null);
     }
 
     @Test
-    void shouldDeclineCredit() throws SQLException {
-        open("http://localhost:8080");
-        BuyTripPage.takeCreditWithInvalidCard();
-        $(withText("Ошибка")).waitUntil(visible, 10000);
-        assertFalse(BuyTripPage.isCreditApproved());
+    @DisplayName("Getting error message and declined status in DB after taking credit with invalid card")
+    void shouldDeclineCreditWithInvalidCard() throws SQLException {
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithInvalidCard);
+        page.checkErrorMessage();
+        assertNotEquals(DBUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
 }

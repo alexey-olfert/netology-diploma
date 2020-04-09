@@ -1,96 +1,107 @@
 package tests;
 
+import data.DataHelper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.BuyTripPage;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 
 public class NegativeTests {
+    BuyTripPage page = new BuyTripPage();
 
     @Test
+    @DisplayName("Getting error message after sending data with card's random number")
     void shouldDeclinePaymentWithInvalidRandomCard() {
-        open("http://localhost:8080");
-        BuyTripPage.payWithRandomInvalidCard();
-        $(withText("Ошибка")).waitUntil(visible, 10000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithRandomInvalidCard);
+        page.checkErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data for credit with default invalid card's number")
     void shouldDeclineCreditWithInvalidRandomCard() {
-        open("http://localhost:8080");
-        BuyTripPage.takeCreditWithRandomInvalidCard();
-        $(withText("Ошибка")).waitUntil(visible, 10000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithRandomInvalidCard);
+        page.checkErrorMessage();
     }
 
     @Test
-    void shouldNotAcceptInvalidMonth() {
-        open("http://localhost:8080");
-        BuyTripPage.insertWrongMonth();
-        $(withText("Неверно указан срок действия карты")).waitUntil(visible, 5000);
+    @DisplayName("Getting error message after sending data with month's big value")
+    void shouldNotAcceptBigMonth() {
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongBigMonth);
+        page.checkWrongValidityErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with month's zero value")
     void shouldNotAcceptZeroMonth() {
-        open("http://localhost:8080");
-        BuyTripPage.insertZeroMonth();
-        $(withText("Неверно указан срок действия карты")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithZeroMonth);
+        page.checkWrongFormatErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with month's wrong format")
     void shouldNotAcceptWrongFormatMonth() {
-        open("http://localhost:8080");
-        BuyTripPage.insertWrongFormatMonth();
-        $(withText("Неверный формат")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongFormatMonth);
+        page.checkWrongFormatErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with previous month's value")
     void shouldNotAcceptPastMonth() {
-        open("http://localhost:8080");
-        BuyTripPage.insertPastMonth();
-        $(withText("Неверно указан срок действия карты")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithPastMonth);
+        page.checkWrongValidityErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with old year's value")
     void shouldNotAcceptOldYear() {
-        open("http://localhost:8080");
-        BuyTripPage.insertOldYear();
-        $(withText("Истёк срок действия карты")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithOldYear);
+        page.checkExpiredCardErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with year's wrong format")
     void shouldNotAcceptWrongFormatYear() {
-        open("http://localhost:8080");
-        BuyTripPage.insertWrongFormatYear();
-        $(withText("Неверный формат")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongFormatYear);
+        page.checkWrongFormatErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with CVV's wrong format")
     void shouldNotAcceptWrongFormatCVV() {
-        open("http://localhost:8080");
-        BuyTripPage.insertWrongFormatCVV();
-        $(withText("Неверный формат")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongFormatCVV);
+        page.checkWrongFormatErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with name consisting of russian letters")
     void shouldNotAcceptRussianName() {
-        open("http://localhost:8080");
-        BuyTripPage.insertRussianName();
-        $(withText("Неверный формат")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithRussianName);
+        page.checkWrongFormatErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after sending data with name consisting of only one word")
     void shouldNotAcceptOnlyFirstName() {
-        open("http://localhost:8080");
-        BuyTripPage.insertFirstName();
-        $(withText("Неверный формат")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithFirstNameOnly);
+        page.checkWrongFormatErrorMessage();
     }
 
     @Test
+    @DisplayName("Getting error message after trying to send empty fields")
     void shouldNotSendEmptyFields() {
-        open("http://localhost:8080");
-        BuyTripPage.sendEmptyFields();
-        $(withText("Поле обязательно для заполнения")).waitUntil(visible, 5000);
+        page.openSUT();
+        page.sendEmptyFields();
+        page.checkRequiredFieldErrorMessage();
     }
 
 }
