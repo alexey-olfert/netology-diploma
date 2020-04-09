@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class DBUtils {
 
-    public static String getPaymentStatus() throws SQLException {
+    public String getPaymentStatus() throws SQLException {
         val codesSQL = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
         val runner = new QueryRunner();
         try (val conn = DriverManager.getConnection(System.getProperty("db.url"), System.getProperty("db.user"), System.getProperty("db.password"));){
@@ -17,7 +17,7 @@ public class DBUtils {
         }
     }
 
-    public static String getCreditStatus() throws SQLException {
+    public String getCreditStatus() throws SQLException {
         val codesSQL = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
         val runner = new QueryRunner();
         try (val conn = DriverManager.getConnection(System.getProperty("db.url"), System.getProperty("db.user"), System.getProperty("db.password"));){
@@ -25,7 +25,7 @@ public class DBUtils {
         }
     }
 
-    public static String getOrderInformation() throws SQLException {
+    public String getOrderInformation() throws SQLException {
         val codesSQL = "SELECT credit_id FROM order_entity ORDER BY created DESC LIMIT 1;";
         val runner = new QueryRunner();
         try (val conn = DriverManager.getConnection(System.getProperty("db.url"), System.getProperty("db.user"), System.getProperty("db.password"));){

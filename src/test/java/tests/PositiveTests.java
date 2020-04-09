@@ -2,7 +2,6 @@ package tests;
 
 import data.DBUtils;
 import data.DataHelper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.BuyTripPage;
@@ -12,6 +11,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PositiveTests {
+    DBUtils dbUtils = new DBUtils();
     BuyTripPage page = new BuyTripPage();
 
     @Test
@@ -20,7 +20,7 @@ public class PositiveTests {
         page.openSUT();
         page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithValidCard);
         page.checkSuccessMessage();
-        assertEquals(DBUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
+        assertEquals(dbUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class PositiveTests {
         page.openSUT();
         page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithInvalidCard);
         page.checkErrorMessage();
-        assertNotEquals(DBUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
+        assertNotEquals(dbUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
 
     @Test
@@ -38,8 +38,8 @@ public class PositiveTests {
         page.openSUT();
         page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithValidCard);
         page.checkSuccessMessage();
-        assertEquals(DBUtils.getCreditStatus(), DataHelper.APPROVED_STATUS);
-        assertNotEquals(DBUtils.getOrderInformation(), null);
+        assertEquals(dbUtils.getCreditStatus(), DataHelper.APPROVED_STATUS);
+        assertNotEquals(dbUtils.getOrderInformation(), null);
     }
 
     @Test
@@ -48,6 +48,6 @@ public class PositiveTests {
         page.openSUT();
         page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithInvalidCard);
         page.checkErrorMessage();
-        assertNotEquals(DBUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
+        assertNotEquals(dbUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
 }
