@@ -1,3 +1,9 @@
+## Отчётность
+
++ [План автоматизации](docs/Plan.md)
++ [Отчёт о пройденных тестах](docs/Report.md)
++ [Итоги](docs/Summary.md)
+
 ## Как запускать тесты
 
 **Условия**
@@ -59,9 +65,3 @@ docker-compose up -d --force-recreate
     ```
     ./gradlew test -Dsut.url=http://localhost:8080 -Ddb.url=jdbc:postgresql://localhost:5432/postgres -Ddb.user=app -Ddb.password=pass
     ```
-
-## Отчётность
-
-+ [План автоматизации](docs/Plan.md)
-+ [Отчёт о пройденных тестах](docs/Report.md)
-+ [Итоги](docs/Summary.md)

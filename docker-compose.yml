@@ -3,8 +3,7 @@ services:
   node-app:
     image: oliver/node-app:V1
     build:
-      context: .
-      dockerfile: ./gate-simulator/Dockerfile
+      context: ./gate-simulator/.
     ports:
       - '9999:9999'
   mysql:

@@ -12,7 +12,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with card's random number")
     void shouldDeclinePaymentWithInvalidRandomCard() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithRandomInvalidCard);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithRandomInvalidCard);
         page.checkErrorMessage();
     }
 
@@ -20,7 +21,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data for credit with default invalid card's number")
     void shouldDeclineCreditWithInvalidRandomCard() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithRandomInvalidCard);
+        page.buyByCreditCard();
+        page.fillTheFields(DataHelper.dataWithRandomInvalidCard);
         page.checkErrorMessage();
     }
 
@@ -28,7 +30,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with month's big value")
     void shouldNotAcceptBigMonth() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongBigMonth);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithWrongBigMonth);
         page.checkWrongValidityErrorMessage();
     }
 
@@ -36,7 +39,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with month's zero value")
     void shouldNotAcceptZeroMonth() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithZeroMonth);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithZeroMonth);
         page.checkWrongFormatErrorMessage();
     }
 
@@ -44,7 +48,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with month's wrong format")
     void shouldNotAcceptWrongFormatMonth() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongFormatMonth);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithWrongFormatMonth);
         page.checkWrongFormatErrorMessage();
     }
 
@@ -52,7 +57,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with previous month's value")
     void shouldNotAcceptPastMonth() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithPastMonth);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithPastMonth);
         page.checkWrongValidityErrorMessage();
     }
 
@@ -60,7 +66,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with old year's value")
     void shouldNotAcceptOldYear() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithOldYear);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithOldYear);
         page.checkExpiredCardErrorMessage();
     }
 
@@ -68,7 +75,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with year's wrong format")
     void shouldNotAcceptWrongFormatYear() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongFormatYear);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithWrongFormatYear);
         page.checkWrongFormatErrorMessage();
     }
 
@@ -76,7 +84,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with CVV's wrong format")
     void shouldNotAcceptWrongFormatCVV() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithWrongFormatCVV);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithWrongFormatCVV);
         page.checkWrongFormatErrorMessage();
     }
 
@@ -84,7 +93,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with name consisting of russian letters")
     void shouldNotAcceptRussianName() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithRussianName);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithRussianName);
         page.checkWrongFormatErrorMessage();
     }
 
@@ -92,7 +102,8 @@ public class NegativeTests {
     @DisplayName("Getting error message after sending data with name consisting of only one word")
     void shouldNotAcceptOnlyFirstName() {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithFirstNameOnly);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithFirstNameOnly);
         page.checkWrongFormatErrorMessage();
     }
 

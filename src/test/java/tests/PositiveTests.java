@@ -18,7 +18,8 @@ public class PositiveTests {
     @DisplayName("Getting success message and approved status in DB after payment with valid card")
     void shouldApprovePaymentWithValidCard() throws SQLException {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithValidCard);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithValidCard);
         page.checkSuccessMessage();
         assertEquals(dbUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
@@ -27,7 +28,8 @@ public class PositiveTests {
     @DisplayName("Getting error message and declined status in DB after payment with invalid card")
     void shouldDeclinePaymentWithInvalidCard() throws SQLException {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCardButton, DataHelper.dataWithInvalidCard);
+        page.buyByCache();
+        page.fillTheFields(DataHelper.dataWithInvalidCard);
         page.checkErrorMessage();
         assertNotEquals(dbUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }
@@ -36,7 +38,8 @@ public class PositiveTests {
     @DisplayName("Getting success message and approved status with right payment info in DB after taking credit with valid card")
     void shouldApproveCreditWithValidCard() throws SQLException {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithValidCard);
+        page.buyByCreditCard();
+        page.fillTheFields(DataHelper.dataWithValidCard);
         page.checkSuccessMessage();
         assertEquals(dbUtils.getCreditStatus(), DataHelper.APPROVED_STATUS);
         assertNotEquals(dbUtils.getOrderInformation(), null);
@@ -46,7 +49,8 @@ public class PositiveTests {
     @DisplayName("Getting error message and declined status in DB after taking credit with invalid card")
     void shouldDeclineCreditWithInvalidCard() throws SQLException {
         page.openSUT();
-        page.FillTheFields(BuyTripPage.payWithCreditButton, DataHelper.dataWithInvalidCard);
+        page.buyByCreditCard();
+        page.fillTheFields(DataHelper.dataWithInvalidCard);
         page.checkErrorMessage();
         assertNotEquals(dbUtils.getPaymentStatus(), DataHelper.APPROVED_STATUS);
     }

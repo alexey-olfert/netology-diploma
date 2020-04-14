@@ -1,11 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import data.DBUtils;
-import data.DataHelper;
 import data.FieldsData;
-
-import java.sql.SQLException;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
@@ -14,17 +10,16 @@ import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class BuyTripPage {
-    public static SelenideElement payWithCardButton = $$("button").find(exactText("Купить"));;
-    public static SelenideElement payWithCreditButton = $$("button").find(exactText("Купить в кредит"));
-    static private SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
-    static private SelenideElement cardNumberField =  $(byText("Номер карты")).parent().$("input");
-    static private SelenideElement monthField = $(byText("Месяц")).parent().$("input");
-    static private SelenideElement yearField = $(byText("Год")).parent().$("input");
-    static private SelenideElement cardHolderField = $(byText("Владелец")).parent().$("input");
-    static private SelenideElement CVVField = $(byText("CVC/CVV")).parent().$("input");
+    private static SelenideElement payWithCardButton = $$("button").find(exactText("Купить"));
+    private static SelenideElement payWithCreditButton = $$("button").find(exactText("Купить в кредит"));
+    private static SelenideElement continueButton = $$("button").find(exactText("Продолжить"));
+    private static SelenideElement cardNumberField = $(byText("Номер карты")).parent().$("input");
+    private static SelenideElement monthField = $(byText("Месяц")).parent().$("input");
+    private static SelenideElement yearField = $(byText("Год")).parent().$("input");
+    private static SelenideElement cardHolderField = $(byText("Владелец")).parent().$("input");
+    private static SelenideElement CVVField = $(byText("CVC/CVV")).parent().$("input");
 
-    public void FillTheFields(SelenideElement button, FieldsData data) {
-        button.click();
+    public void fillTheFields(FieldsData data) {
         cardNumberField.setValue(data.getCardNumber());
         monthField.setValue(data.getMonth());
         yearField.setValue(data.getYear());
@@ -37,12 +32,14 @@ public class BuyTripPage {
         payWithCardButton.click();
         continueButton.click();
     }
-/*
-    public void openSUT() {
-        open("http://localhost:8080");
+
+    public void buyByCache() {
+        payWithCardButton.click();
     }
 
- */
+    public void buyByCreditCard() {
+        payWithCreditButton.click();
+    }
 
     public void openSUT() {
         open(System.getProperty("sut.url"));
