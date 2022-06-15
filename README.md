@@ -56,7 +56,7 @@
 
 **Условия**
 
-На тестируемой машине установлен Docker, Gradle, MySQL, PostgreSQL.
+На машине для запуска тестов установлены Docker, Gradle, MySQL/PostgreSQL, JDK 8, Google Chrome.
 
 **Шаги**
 
@@ -87,7 +87,7 @@ docker-compose up -d --force-recreate
     ```
 
 
-7. Выйти из БД, выполнив запрос `exit;` (для MySQL) либо `exit` (для PostgreSQL)
+7. Выйти из БД сочетанием клавиш Ctrl+D;
 8. Запустить SUT.
 
     * Для MySQL:
